@@ -1,0 +1,5 @@
+---
+- name: Restart Jenkins Slave
+  win_service:
+    name: Jenkins
+    state: restarted

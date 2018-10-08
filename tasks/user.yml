@@ -1,0 +1,11 @@
+---
+- name: Create Jenkins slave user
+  win_user:
+    name: "{{ jenkins_slave_win_user }}"
+    fullname: "Jenkins Slave User"
+    password: "{{ jenkins_slave_win_password }}"
+    groups:
+      - "Administrators"
+    password_never_expires: yes
+    account_disabled: no
+  

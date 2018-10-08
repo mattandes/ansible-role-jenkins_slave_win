@@ -1,0 +1,59 @@
+---
+- name: Create Jenkins Slave Directory
+  win_file:
+    path: "{{ jenkins_slave_win_dir }}"
+    state: "directory"
+
+- name: Manage Jenkins Slave Directory Permissions
+  win_acl:
+    path: "{{ jenkins_slave_win_dir }}"
+    propagation: "InheritOnly"
+    rights: "FullControl"
+    type: "allow"
+    user: "{{ jenkins_slave_win_user }}"
+
+- name: Install needed packages via Chocolatey
+  win_chocolatey:
+    name: "{{ item }}"
+  with_items: "{{ jenkins_slave_win_base_packages }}"
+
+- name: Check if Agent Jar exists already
+  win_stat:
+    path: "{{ jenkins_slave_win_dir }}\\agent.jar"
+  register: jenkins_slave_win_agent_jar
+
+- name: Download Jenkins Slave Agent Jar from Jenkins Server
+  win_get_url:
+    url: "{{ jenkins_slave_win_jenkins_url }}/jnlpJars/agent.jar"
+    dest: "{{ jenkins_slave_win_dir }}\\agent.jar"
+  when: jenkins_slave_win_agent_jar.stat.exists == False
+
+- name: Get Jenkins Slave's Secret
+  uri:
+    url: "{{ jenkins_slave_win_jenkins_url }}/scriptText"
+    method: POST
+    body: "script=println jenkins.model.Jenkins.instance.nodesObject.getNode('{{ ansible_hostname | lower }}')?.computer?.jnlpMac"
+    user: "{{ jenkins_slave_win_jenkins_user }}"
+    password: "{{ jenkins_slave_win_jenkins_password }}"
+    force_basic_auth: yes
+    return_content: yes
+  changed_when: false
+  register: jenkins_slave_win_agent_secret
+  tags:
+    - jenkins-secret
+  delegate_to: localhost
+
+- name: Create Service Script
+  win_template:
+    src: agent.bat
+    dest: "{{ jenkins_slave_win_dir }}\\agent.bat"
+  notify: Restart Jenkins Slave
+
+- name: Install Jenkins Slave Service via NSSM
+  win_nssm:
+    name: Jenkins
+    application: "{{ jenkins_slave_win_dir }}\\agent.bat"
+    start_mode: auto
+    user: "{{ jenkins_slave_win_user }}"
+    password: "{{ jenkins_slave_win_password }}"
+  notify: Restart Jenkins Slave

@@ -1,0 +1,24 @@
+---
+# Jenkins Slave User
+jenkins_slave_win_user: jenkins
+
+# Jenkins Slave User Password:
+jenkins_slave_win_password: jenkins
+
+# Control whether to create and manage the jenkins user as a local user account
+jenkins_slave_win_create_user: true
+
+# Jenkins Slave Working Directory
+jenkins_slave_win_dir: "C:\\Jenkins"
+
+# Jenkins Server URL
+jenkins_slave_win_jenkins_url: http://localhost:8080
+
+# Jenkins Server User to connect as for getting the slave's secret
+jenkins_slave_win_jenkins_user: admin
+
+# Jenkins Server User's password
+jenkins_slave_win_jenkins_password: admin
+
+# Jenkins Slave Java Args
+jenkins_slave_win_java_args: "-Xmx768m"

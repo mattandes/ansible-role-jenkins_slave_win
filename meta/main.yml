@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Matt Andes
+  description: Ansible role to setup a Jenkins Windows slave installed as a service via NSSM
+  role_name: jenkins_slave_win
+  license: license (MIT)
+  min_ansible_version: 2.4
+  platforms:
+    - name: Windows
+      versions:
+        - all
+  galaxy_tags:
+    - jenkins
+    - windows-slave
+    
+dependencies: []

@@ -1,0 +1,5 @@
+---
+# Needed packages to setup slave
+jenkins_slave_win_base_packages:
+  - jre8
+  - nssm
