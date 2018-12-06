@@ -1,6 +1,8 @@
 Ansible Role: Jenkins Slave - Windows
 =========
 
+[![Build Status](https://travis-ci.org/mattandes/ansible-role-jenkins_slave_win.svg?branch=master)](https://travis-ci.org/mattandes/ansible-role-jenkins_slave_win)
+
 Configures a Jenkins Windows slave utilizing the agent.jar file from the Jenkins master. This role will create a Windows service using NSSM to manage and automatically run the agent.jar file on startup.
 
 Requirements
