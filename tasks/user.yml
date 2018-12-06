@@ -6,6 +6,5 @@
     password: "{{ jenkins_slave_win_password }}"
     groups:
       - "Administrators"
-    password_never_expires: yes
-    account_disabled: no
-  
+    password_never_expires: true
+    account_disabled: false

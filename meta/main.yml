@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Matt Andes
   description: Ansible role to setup a Jenkins Windows slave installed as a service via NSSM
@@ -12,5 +13,4 @@ galaxy_info:
   galaxy_tags:
     - jenkins
     - windows
-    
 dependencies: []

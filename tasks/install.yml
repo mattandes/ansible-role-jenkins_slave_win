@@ -26,7 +26,7 @@
   win_get_url:
     url: "{{ jenkins_slave_win_jenkins_url }}/jnlpJars/agent.jar"
     dest: "{{ jenkins_slave_win_dir }}\\agent.jar"
-  when: jenkins_slave_win_agent_jar.stat.exists == False
+  when: not jenkins_slave_win_agent_jar.stat.exists
 
 - name: Get Jenkins Slave's Secret
   uri:
@@ -35,8 +35,8 @@
     body: "script=println jenkins.model.Jenkins.instance.nodesObject.getNode('{{ ansible_hostname | lower }}')?.computer?.jnlpMac"
     user: "{{ jenkins_slave_win_jenkins_user }}"
     password: "{{ jenkins_slave_win_jenkins_password }}"
-    force_basic_auth: yes
-    return_content: yes
+    force_basic_auth: true
+    return_content: true
   changed_when: false
   register: jenkins_slave_win_agent_secret
   tags:
