@@ -11,6 +11,6 @@ galaxy_info:
         - all
   galaxy_tags:
     - jenkins
-    - windows-slave
+    - windows
     
 dependencies: []
