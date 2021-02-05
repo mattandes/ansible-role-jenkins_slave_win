@@ -10,7 +10,7 @@ Requirements
 
 * Administrator access on the Windows slave node
 * A running Jenkins master (Role defaults to assuming this is running at http://localhost:8080)
-* The Windows slave node defined in the Jenkins node section with the name of the node matching the Windows hostname in lowercase
+* The Windows slave node defined in the Jenkins node section with the name defined in `jenkins_slave_node_name` (defaults to `{{ ansible_hostname | lower }}`)
 
 Role Variables
 --------------
@@ -48,6 +48,10 @@ The password for the user to connect to the Jenkins master as.
     jenkins_slave_win_java_args: "-Xmx768m"
 
 Variable used to pass additional Java arguments to the slave agent process when it starts up.
+
+    jenkins_slave_node_name: "{{ ansible_hostname | lower }}"
+
+The Windows node name used in the Jenkins nodes.
 
 Dependencies
 ------------
