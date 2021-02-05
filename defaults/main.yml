@@ -22,3 +22,6 @@ jenkins_slave_win_jenkins_password: admin
 
 # Jenkins Slave Java Args
 jenkins_slave_win_java_args: "-Xmx768m"
+
+# Jenkins Slave Node Name
+jenkins_slave_node_name: "{{ ansible_hostname | lower }}"

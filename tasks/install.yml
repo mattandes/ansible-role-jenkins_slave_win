@@ -32,7 +32,7 @@
   uri:
     url: "{{ jenkins_slave_win_jenkins_url }}/scriptText"
     method: POST
-    body: "script=println jenkins.model.Jenkins.instance.nodesObject.getNode('{{ ansible_hostname | lower }}')?.computer?.jnlpMac"
+    body: "script=println jenkins.model.Jenkins.instance.nodesObject.getNode('{{ jenkins_slave_node_name }}')?.computer?.jnlpMac"
     user: "{{ jenkins_slave_win_jenkins_user }}"
     password: "{{ jenkins_slave_win_jenkins_password }}"
     force_basic_auth: true
