@@ -28,6 +28,17 @@
     dest: "{{ jenkins_slave_win_dir }}\\agent.jar"
   when: not jenkins_slave_win_agent_jar.stat.exists
 
+- name: Get Jenkins Crumb
+  uri:
+    url: "{{ jenkins_slave_win_jenkins_url }}/crumbIssuer/api/json"
+    user: "{{ jenkins_slave_win_jenkins_user }}"
+    password: "{{ jenkins_slave_win_jenkins_password }}"
+    force_basic_auth: true
+    return_content: yes
+  tags:
+    - jenkins-secret
+  register: crumb_token
+
 - name: Get Jenkins Slave's Secret
   uri:
     url: "{{ jenkins_slave_win_jenkins_url }}/scriptText"
@@ -37,6 +48,8 @@
     password: "{{ jenkins_slave_win_jenkins_password }}"
     force_basic_auth: true
     return_content: true
+    headers:
+      Jenkins-Crumb: "{{ crumb_token.json.crumb }}"
   changed_when: false
   register: jenkins_slave_win_agent_secret
   tags:
